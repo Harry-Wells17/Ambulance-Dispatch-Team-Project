@@ -1,0 +1,82 @@
+<div *ngIf="showConfirmClose" class="fixed top-0 left-0 overflow-hidden text-white" style="z-index: 1001">
+  <div class="w-[100vw] overflow-y-scroll max-h-[90vh] min-h-[100vh] bg-opacity-50 bg-neutral-950 top-0 left-0 flex justify-center">
+    <div
+      class="bg-neutral-800 min-w-[30vw] min-h-[100px] h-max mt-5 mb-5 rounded-lg border-2 border-neutral-700 shadow-lg shadow-white p-3"
+    >
+      <div class="w-full">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl">Confirm Call Closure:</h1>
+        </div>
+
+        <div class="flex items-end justify-end mt-4">
+          <div class="flex w-min space-x-2">
+            <button
+              aria-label="assign resources"
+              (click)="closeCallBound()"
+              class="cursor-pointer px-3 py-2 rounded-lg ml-auto border-white border-[1px] border-solid hover:bg-green-700 bg-green-600"
+            >
+              Confirm Close
+            </button>
+            <button
+              aria-label="assign resources"
+              (click)="closeConfirmClose()"
+              class="cursor-pointer px-3 py-2 rounded-lg ml-auto border-white border-[1px] border-solid hover:bg-red-700 bg-red-600"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [style.backgroundColor]="color" class="w-full py-3 flex flex-row items-center justify-between px-2">
+  <div class="flex flex-row items-center justify-center">
+    <h1 class="text-xl">
+      <strong>{{ emergencyCall.type }} - </strong>
+    </h1>
+    <h1 class="text-neutral-300 ml-2">{{ emergencyCall.condition }}</h1>
+  </div>
+
+  <div class="flex flex-row space-x-2">
+    <button
+      aria-label="assign resources"
+      (click)="open()"
+      class="cursor-pointer px-3 py-2 rounded-lg ml-auto border-white border-[1px] border-solid hover:bg-blue-700 bg-blue-600"
+    >
+      Assign
+    </button>
+    <button
+      aria-label="manage call"
+      (click)="openEdit()"
+      class="hover:bg-green-700 bg-green-600 px-3 py-2 cursor-pointer rounded-lg ml-auto border-white border-[1px] border-solid"
+    >
+      Manage
+    </button>
+    <button
+      *ngIf="emergencyCall.closed === false"
+      aria-label="assign resources"
+      (click)="openConfirmCloseBound()"
+      class="cursor-pointer px-3 py-2 rounded-lg ml-auto border-white border-[1px] border-solid hover:bg-orange-700 bg-orange-600"
+    >
+      Close
+    </button>
+    <button
+      *ngIf="emergencyCall.closed"
+      aria-label="assign resources"
+      (click)="reOpenCall()"
+      class="cursor-pointer px-3 py-2 rounded-lg ml-auto border-white border-[1px] border-solid hover:bg-orange-700 bg-orange-600"
+    >
+      Reopen
+    </button>
+  </div>
+</div>
+
+<edit-resource-component *ngIf="showAssignResource" [call]="emergencyCall" [close]="thecloseBound"></edit-resource-component>
+<edit-calls-component
+  *ngIf="showEditCall"
+  [callId]="emergencyCall.id"
+  [close]="theEditCloseBound"
+  [refresh]="refresh"
+></edit-calls-component>

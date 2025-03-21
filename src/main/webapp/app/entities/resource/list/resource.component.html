@@ -1,0 +1,145 @@
+<div>
+  <h2 id="page-heading" data-cy="ResourceHeading">
+    <span>Resources</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-resource"
+        [routerLink]="['/resource/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Resource </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="resources?.length === 0">
+    <span>No Resources found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="resources && resources.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="created">
+            <div class="d-flex">
+              <span>Created</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="type">
+            <div class="d-flex">
+              <span>Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span>Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="callSign">
+            <div class="d-flex">
+              <span>Call Sign</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="latitude">
+            <div class="d-flex">
+              <span>Latitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="longitude">
+            <div class="d-flex">
+              <span>Longitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="resourceBreak.id">
+            <div class="d-flex">
+              <span>Resource Break</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="event.id">
+            <div class="d-flex">
+              <span>Event</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resource of resources; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/resource', resource.id, 'view']">{{ resource.id }}</a>
+          </td>
+          <td>{{ resource.created | formatMediumDatetime }}</td>
+          <td>{{ resource.type }}</td>
+          <td>{{ resource.status }}</td>
+          <td>{{ resource.callSign }}</td>
+          <td>{{ resource.latitude }}</td>
+          <td>{{ resource.longitude }}</td>
+          <td>
+            <div *ngIf="resource.resourceBreak">
+              <a [routerLink]="['/resource-breaks', resource.resourceBreak.id, 'view']">{{ resource.resourceBreak.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="resource.event">
+              <a [routerLink]="['/event', resource.event.id, 'view']">{{ resource.event.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/resource', resource.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/resource', resource.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(resource)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

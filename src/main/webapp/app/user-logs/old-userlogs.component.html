@@ -1,0 +1,161 @@
+<div class="text-white">
+  <div class="alert alert-warning" id="no-result" *ngIf="calls?.length === 0">
+    <span>No Emergency Calls found </span>
+  </div>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <div class="color-block"></div>
+  <style>
+    .table-container {
+      width: 99.8%;
+      max-height: 750px;
+      overflow: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid rgb(63, 62, 62);
+      padding: 10px;
+      text-align: left;
+    }
+    .sticky-header th {
+      position: sticky;
+      top: 0;
+      background-color: #336699;
+      z-index: 100;
+    }
+    .color-block {
+      background-color: bg-slate-600;
+      height: 20px;
+      margin-bottom: 10px;
+    }
+
+    .modal {
+      display: block;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modalContent {
+      background-color: #708090;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
+  <div *ngIf="showModal" class="modal">
+    <div class="modalContent">
+      <span class="close" (click)="toggleModal(null)">&times;</span>
+      <p>{{ modalContent }}</p>
+    </div>
+  </div>
+
+  <div class="table-container" id="entities" *ngIf="calls && calls.length > 0">
+    <table mat-table style="overflow-x: auto" class="table table-striped" aria-describedby="page-heading">
+      <thead class="text-gray-50 sticky-header">
+        <tr>
+          <th>
+            <div class="d-flex">
+              <span>DATE & TIME</span>
+              <div *ngIf="showSearchButton">
+                <input type="date" (change)="searchByDate()" />
+                <!---->
+                <button (click)="searchByDate()">Search</button>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex">
+              <span>CALL</span>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex">
+              <span>UNIT</span>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex">
+              <span>MESSAGE</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let call of calls.slice().reverse(); trackBy: trackId" data-cy="entityTable" (click)="toggleModal(call)">
+          <td>{{ call.created ? call.created : 'N/A' }}</td>
+          <td>{{ call.id }}</td>
+          <td>unit number</td>
+          <td>{{ call.type }}, {{ call.condition }}, {{ call.injuries }}, Age: {{ call.age }}, Sex: {{ call.sexAssignedAtBirth }}</td>
+          <!-- type + injuries + condition + age + sex -->
+        </tr>
+        <ng-container *ngIf="deletedCalls.length > 0">
+          <tr>
+            <td colspan="4">
+              <h4>Deleted Calls</h4>
+            </td>
+          </tr>
+          <tr *ngFor="let deletedCall of deletedCalls">
+            <!-- Display deleted call data -->
+            <td>{{ deletedCall.created ? deletedCall.created : 'N/A' }}</td>
+            <td>{{ deletedCall.id }}</td>
+            <td>unit number</td>
+            <td>
+              {{ deletedCall.type }}, {{ deletedCall.condition }}, {{ deletedCall.injuries }}, Age: {{ deletedCall.age }}, Sex:
+              {{ deletedCall.sexAssignedAtBirth }}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let event of events.slice().reverse(); trackBy: trackEventID" data-cy="entityTable" (click)="toggleModal(call)">
+          <td>{{ systemLog?.createdAt ? systemLog?.createdAt : 'N/A' }}</td>
+          <td>{{ event.id }}</td>
+          <td>unit number</td>
+          <td>{{ event.eventName }}, {{ event.eventDescription }}</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let resource of resourceAssigned; trackBy: trackResourceID" data-cy="resourceTable">
+          <td>{{ resource.created ? resource.created : 'N/A' }}</td>
+          <td>{{ resource.id }}</td>
+          <td></td>
+          <td>Status: {{ resource.status }},, {{ resource.type }}</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let resource of resourceBreaks">
+          <td>{{ currentDate }}</td>
+          <td></td>
+          <td>{{ resourceBreak?.lastBreak }}, {{ resourceBreak?.breakRequested ? 'Break requested' : 'Not Requested' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

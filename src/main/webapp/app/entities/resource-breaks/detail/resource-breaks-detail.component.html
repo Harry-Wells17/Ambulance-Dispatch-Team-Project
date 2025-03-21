@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resourceBreaks">
+      <h2 data-cy="resourceBreaksDetailsHeading"><span>Resource Breaks</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ resourceBreaks.id }}</span>
+        </dd>
+        <dt><span>Last Break</span></dt>
+        <dd>
+          <span>{{ resourceBreaks.lastBreak | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Break Requested</span></dt>
+        <dd>
+          <span>{{ resourceBreaks.breakRequested }}</span>
+        </dd>
+        <dt><span>Started Break</span></dt>
+        <dd>
+          <span>{{ resourceBreaks.startedBreak | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>On Break</span></dt>
+        <dd>
+          <span>{{ resourceBreaks.onBreak }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resource-breaks', resourceBreaks.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<!-- Not Logged In -->
+<div class="min-h-[80vh]">
+  <div *ngIf="account === null || account === undefined">
+    <div class="text-white w-full mb-20 min-h-[40vh]">
+      <div class="w-full flex items-center justify-center">
+        <div class="bg-red-600 w-[60%] p-3 border-2 border-red-700 rounded-lg flex flex-row items-center justify-between">
+          <h1 class="text-xl"><strong>You are not logged in</strong>, you must be logged into this protected page!</h1>
+          <h1 class="mr-2 text-3xl mt-[-5px]">x</h1>
+        </div>
+      </div>
+      <div class="mt-8 flex items-center justify-center w-full flex-col">
+        <h1>
+          Please sign in to view this page, please then navigate back to <span class="px-2 py-1 bg-neutral-700 rounded-md">/events</span> !
+        </h1>
+        <a [routerLink]="'/login'">
+          <button aria-label="open sign in page" class="button bg-slate-600 hover:bg-slate-700 w-[100px] mt-3">Sign In</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      account !== undefined &&
+      account !== null &&
+      !(
+        account.authorities.includes('ROLE_ADMIN') ||
+        account.authorities.includes('ROLE_CLINICIAN') ||
+        account.authorities.includes('ROLE_MANAGEMENT')
+      )
+    "
+  >
+    <div class="text-white w-full mb-20 min-h-[40vh]">
+      <div class="w-full flex items-center justify-center">
+        <div class="bg-red-600 w-[60%] p-3 border-2 border-red-700 rounded-lg flex flex-row items-center justify-between">
+          <h1 class="text-xl">
+            <strong>You are not authorised to view this page! </strong>
+            <span class="text-lg"
+              >Only <span class="px-2 py-1 bg-neutral-700 rounded-md">ADMIN</span>,
+              <span class="px-2 py-1 bg-neutral-700 rounded-md">MANAGEMENT</span>,
+              <span class="px-2 py-1 bg-neutral-700 rounded-md">ClINICIAN</span>, accounts can access this!
+            </span>
+          </h1>
+          <h1 class="mr-2 text-3xl mt-[-5px]">x</h1>
+        </div>
+      </div>
+      <div class="mt-8 flex items-center justify-center w-full flex-col">
+        <h1>
+          Please sign in with an authorised account to view this page, please then navigate back to
+          <span class="px-2 py-1 bg-neutral-700 rounded-md">/mobile-sim</span> !
+        </h1>
+        <a [routerLink]="'/login'">
+          <button aria-label="open sign in page" class="button bg-slate-600 hover:bg-slate-700 w-[100px] mt-3">Sign In</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="min-h-[80vh]"
+    *ngIf="
+      account !== undefined &&
+      account !== null &&
+      (account.authorities.includes('ROLE_ADMIN') ||
+        account.authorities.includes('ROLE_CLINICIAN') ||
+        account.authorities.includes('ROLE_MANAGEMENT'))
+    "
+  >
+    <div class="w-full flex items-center justify-center flex-col">
+      <h1 class="text-5xl">Mobile Simulator</h1>
+
+      <div class="relative flex items-center justify-center" id="alert-window">
+        <img src="/content/images/iphone.png" style="height: 690px; width: 690px" />
+
+        <div
+          class="bg-neutral-800 absolute z-100 flex items-center justify-start flex-col overflow-auto"
+          style="width: 282px; height: 500px; top: 95px"
+        >
+          <h1 class="mt-3 text-4xl"><span class="text-blue-400">Ambu</span>Dispatch</h1>
+          <div class="flex-grow h-max w-full">
+            <shift-page *ngIf="stage === 0" [returnInfo]="setEventBound"></shift-page>
+            <resource-type-page *ngIf="stage === 1" [event]="event" [goBack]="changeEventBound" [returnInfo]="setResourceBreakBound">
+            </resource-type-page>
+            <main-mobile-comp
+              class="h-max"
+              *ngIf="stage === 2"
+              [event]="event"
+              [resourceBreak]="resourceBreak"
+              [closeShift]="closeShiftBound"
+            ></main-mobile-comp>
+          </div>
+          <div>
+            <p class="mb-2 text-sm ml-1">Logged In - {{ account.login }} ({{ stripRole(account.authorities[0]) }})</p>
+            <h1 class="text-center pb-1" style="font-size: xx-small">
+              You are accessing an experimental mobile application developed by participants of the Team Project 2024 module.
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="systemLog">
+      <h2 data-cy="systemLogDetailsHeading"><span>System Log</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ systemLog.id }}</span>
+        </dd>
+        <dt><span>Created At</span></dt>
+        <dd>
+          <span>{{ systemLog.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Log Type</span></dt>
+        <dd>
+          <span>{{ systemLog.logType }}</span>
+        </dd>
+        <dt><span>Message Content</span></dt>
+        <dd>
+          <span>{{ systemLog.messageContent }}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <span>{{ systemLog.createdBy?.login }}</span>
+        </dd>
+        <dt><span>Emergency Call</span></dt>
+        <dd>
+          <div *ngIf="systemLog.emergencyCall">
+            <a [routerLink]="['/emergency-call', systemLog.emergencyCall.id, 'view']">{{ systemLog.emergencyCall.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Event</span></dt>
+        <dd>
+          <div *ngIf="systemLog.event">
+            <a [routerLink]="['/event', systemLog.event.id, 'view']">{{ systemLog.event.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/system-log', systemLog.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

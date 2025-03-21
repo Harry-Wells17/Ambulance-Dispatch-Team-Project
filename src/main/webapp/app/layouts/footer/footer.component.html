@@ -1,0 +1,68 @@
+<div class="bg-neutral-900 w-[100vw] min-h-[200px] left-0 absolute p-4 z-[-10]" id="footer">
+  <div class="flex flex-row w-full mt-2 mx-28">
+    <div class="w-[50%]">
+      <h1 class="text-6xl text-red-400">Ambulance Dispatch</h1>
+      <p class="text-neutral-300 mt-2">
+        Ambulance Dispatch is a tool created to aid emergency medical dispatchers but providing a robust, easy to use CAD (Computer Aided
+        Dispatch). This tool is designed to boost communication efficiency and save precious seconds in time critical emergencies.
+      </p>
+
+      <div class="mt-4 mb-2 flex flex-row items-center justify-start space-x-2">
+        <h1>Font Change:</h1>
+        <button class="bg-green-500 hover:green-600 rounded-lg p-2" (click)="changeFont(1)">Increase Font</button>
+        <button class="bg-red-500 hover:red-600 rounded-lg p-2" (click)="changeFont(-1)">Decrease Font</button>
+      </div>
+    </div>
+    <div class="flex w-[40%] flex-row justify-center">
+      <div class="w-[25%] px-2 flex justify-center items-center flex-col">
+        <h1 class="text-2xl text-neutral-300">Users</h1>
+        <div class="flex-grow flex flex-col space-y-4 mt-2">
+          <a [routerLink]="'/login'">
+            <h1 class="text-neutral-400 underline">Login</h1>
+          </a>
+          <a [routerLink]="'/register'">
+            <h1 class="text-neutral-400 underline">Register</h1>
+          </a>
+          <a [routerLink]="'/user-management'">
+            <h1 class="text-neutral-400 underline">Management</h1>
+          </a>
+        </div>
+      </div>
+      <div class="w-[25%] px-2 flex justify-center items-center flex-col">
+        <h1 class="text-2xl text-neutral-300">Legal</h1>
+        <div class="flex-grow flex flex-col space-y-4 mt-2">
+          <a [routerLink]="'/gdpr'">
+            <h1 class="text-neutral-400 underline">GDPR</h1>
+          </a>
+          <a href="/content/legal/Team49_DPIA.pdf">
+            <h1 class="text-neutral-400 underline">DPIA</h1>
+          </a>
+        </div>
+      </div>
+      <div class="w-[25%] px-2 flex justify-center items-center flex-col">
+        <h1 class="text-2xl text-neutral-300">Pages</h1>
+        <div class="flex-grow flex flex-col space-y-4 mt-2">
+          <a [routerLink]="'/'">
+            <h1 class="text-neutral-400 underline">Homepage</h1>
+          </a>
+          <a [routerLink]="'/events'">
+            <h1 class="text-neutral-400 underline">Events</h1>
+          </a>
+          <a [routerLink]="'/mobile-sim'">
+            <h1 class="text-neutral-400 underline">Mobile Simulator</h1>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full flex items-center justify-center">
+    <hr class="mb-5 mt-2 w-[80%] bg-neutral-600 border-none h-[1px]" />
+  </div>
+
+  <div class="mx-28">
+    <p class="text-neutral-400">
+      You are accessing an experimental web application developed by participants of the Team Project 2024 module.
+    </p>
+  </div>
+</div>

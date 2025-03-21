@@ -1,0 +1,178 @@
+<div>
+  <h2 id="page-heading" data-cy="EmergencyCallHeading">
+    <span>Emergency Calls</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-emergency-call"
+        [routerLink]="['/emergency-call/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Emergency Call </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="emergencyCalls?.length === 0">
+    <span>No Emergency Calls found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="emergencyCalls && emergencyCalls.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="created">
+            <div class="d-flex">
+              <span>Created</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="open">
+            <div class="d-flex">
+              <span>Open</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="type">
+            <div class="d-flex">
+              <span>Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="age">
+            <div class="d-flex">
+              <span>Age</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sexAssignedAtBirth">
+            <div class="d-flex">
+              <span>Sex Assigned At Birth</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="history">
+            <div class="d-flex">
+              <span>History</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="injuries">
+            <div class="d-flex">
+              <span>Injuries</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="condition">
+            <div class="d-flex">
+              <span>Condition</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="latitude">
+            <div class="d-flex">
+              <span>Latitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="longitude">
+            <div class="d-flex">
+              <span>Longitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="closed">
+            <div class="d-flex">
+              <span>Closed</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span>Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="event.id">
+            <div class="d-flex">
+              <span>Event</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emergencyCall of emergencyCalls; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/emergency-call', emergencyCall.id, 'view']">{{ emergencyCall.id }}</a>
+          </td>
+          <td>{{ emergencyCall.created | formatMediumDatetime }}</td>
+          <td>{{ emergencyCall.open }}</td>
+          <td>{{ emergencyCall.type }}</td>
+          <td>{{ emergencyCall.age }}</td>
+          <td>{{ emergencyCall.sexAssignedAtBirth }}</td>
+          <td>{{ emergencyCall.history }}</td>
+          <td>{{ emergencyCall.injuries }}</td>
+          <td>{{ emergencyCall.condition }}</td>
+          <td>{{ emergencyCall.latitude }}</td>
+          <td>{{ emergencyCall.longitude }}</td>
+          <td>{{ emergencyCall.closed }}</td>
+          <td>
+            {{ emergencyCall.createdBy?.login }}
+          </td>
+          <td>
+            <div *ngIf="emergencyCall.event">
+              <a [routerLink]="['/event', emergencyCall.event.id, 'view']">{{ emergencyCall.event.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/emergency-call', emergencyCall.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/emergency-call', emergencyCall.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(emergencyCall)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+id;created_at;log_type;message_content;created_by_id
+1;2024-03-04T03:58:15;CALL;../fake-data/blob/hipster.txt;1
+2;2024-03-03T23:49:18;RESOURCE;../fake-data/blob/hipster.txt;2
+3;2024-03-04T04:09:07;CALL;../fake-data/blob/hipster.txt;1
+4;2024-03-03T20:16:05;CONTROLROOM;../fake-data/blob/hipster.txt;1
+5;2024-03-03T22:53:42;BREAKLOG;../fake-data/blob/hipster.txt;2
+6;2024-03-04T11:44:12;CONTROLROOM;../fake-data/blob/hipster.txt;1
+7;2024-03-04T13:57:54;BREAKLOG;../fake-data/blob/hipster.txt;1
+8;2024-03-03T21:46:53;CONTROLROOM;../fake-data/blob/hipster.txt;1
+9;2024-03-04T09:18:51;CONTROLROOM;../fake-data/blob/hipster.txt;2
+10;2024-03-04T07:50:42;BREAKLOG;../fake-data/blob/hipster.txt;1

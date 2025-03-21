@@ -1,0 +1,182 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-resource-assigned-heading" data-cy="ResourceAssignedCreateUpdateHeading">Create or edit a Resource Assigned</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_callRecievedTime">Call Recieved Time</label>
+          <div class="d-flex">
+            <input
+              id="field_callRecievedTime"
+              data-cy="callRecievedTime"
+              type="datetime-local"
+              class="form-control"
+              name="callRecievedTime"
+              formControlName="callRecievedTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('callRecievedTime')!.invalid &&
+              (editForm.get('callRecievedTime')!.dirty || editForm.get('callRecievedTime')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('callRecievedTime')?.errors?.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('callRecievedTime')?.errors?.datetimelocal">
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_onSceneTime">On Scene Time</label>
+          <div class="d-flex">
+            <input
+              id="field_onSceneTime"
+              data-cy="onSceneTime"
+              type="datetime-local"
+              class="form-control"
+              name="onSceneTime"
+              formControlName="onSceneTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_leftSceneTime">Left Scene Time</label>
+          <div class="d-flex">
+            <input
+              id="field_leftSceneTime"
+              data-cy="leftSceneTime"
+              type="datetime-local"
+              class="form-control"
+              name="leftSceneTime"
+              formControlName="leftSceneTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_arrivedHospitalTime">Arrived Hospital Time</label>
+          <div class="d-flex">
+            <input
+              id="field_arrivedHospitalTime"
+              data-cy="arrivedHospitalTime"
+              type="datetime-local"
+              class="form-control"
+              name="arrivedHospitalTime"
+              formControlName="arrivedHospitalTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_clearHospitalTime">Clear Hospital Time</label>
+          <div class="d-flex">
+            <input
+              id="field_clearHospitalTime"
+              data-cy="clearHospitalTime"
+              type="datetime-local"
+              class="form-control"
+              name="clearHospitalTime"
+              formControlName="clearHospitalTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_greenTime">Green Time</label>
+          <div class="d-flex">
+            <input
+              id="field_greenTime"
+              data-cy="greenTime"
+              type="datetime-local"
+              class="form-control"
+              name="greenTime"
+              formControlName="greenTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_unAssignedTime">Un Assigned Time</label>
+          <div class="d-flex">
+            <input
+              id="field_unAssignedTime"
+              data-cy="unAssignedTime"
+              type="datetime-local"
+              class="form-control"
+              name="unAssignedTime"
+              formControlName="unAssignedTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_resource">Resource</label>
+          <select
+            class="form-control"
+            id="field_resource"
+            data-cy="resource"
+            name="resource"
+            formControlName="resource"
+            [compareWith]="compareResource"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="resourceOption" *ngFor="let resourceOption of resourcesSharedCollection">{{ resourceOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_emergencyCall">Emergency Call</label>
+          <select
+            class="form-control"
+            id="field_emergencyCall"
+            data-cy="emergencyCall"
+            name="emergencyCall"
+            formControlName="emergencyCall"
+            [compareWith]="compareEmergencyCall"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="emergencyCallOption" *ngFor="let emergencyCallOption of emergencyCallsSharedCollection">
+              {{ emergencyCallOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

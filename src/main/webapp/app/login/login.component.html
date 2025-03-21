@@ -1,0 +1,65 @@
+<div class="mb-20">
+  <div class="d-flex justify-content-center flex-col items-center">
+    <h1 class="text-white text-4xl mb-2">Sign in to access Ambulance Dispatch!</h1>
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <h1 data-cy="loginTitle">Sign in</h1>
+      <div class="alert alert-danger" *ngIf="authenticationError" data-cy="loginError">
+        <strong>Failed to sign in!</strong> Please check your credentials and try again.
+      </div>
+      <form class="form text-white" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="mb-3">
+          <label class="username-label" for="username">Username</label>
+          <input
+            aria-label="enter user name"
+            type="text"
+            class="bg-neutral-900 form-control"
+            name="username"
+            id="username"
+            placeholder="Your username"
+            formControlName="username"
+            #username
+            data-cy="username"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="password">Password</label>
+          <input
+            aria-label="enter password"
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Your password"
+            formControlName="password"
+            data-cy="password"
+          />
+        </div>
+
+        <div class="form-check">
+          <label class="form-check-label" for="rememberMe">
+            <input
+              aria-label="select to remember me"
+              class="form-check-input"
+              type="checkbox"
+              name="rememberMe"
+              id="rememberMe"
+              formControlName="rememberMe"
+            />
+            <span>Remember me</span>
+          </label>
+        </div>
+
+        <button aria-label="go to sign in page" type="submit" class="btn btn-primary mt-2" data-cy="submit">Sign in</button>
+      </form>
+      <div class="mt-3 p-3 alert alert-warning bg-transparent border-red-500 border-[3px] border-solid">
+        <a class="alert-link" routerLink="/account/reset/request" data-cy="forgetYourPasswordSelector">Did you forget your password?</a>
+      </div>
+
+      <div class="mt-3 p-3 alert alert-warning bg-transparent border-yellow-500 border-[3px] border-solid">
+        <span>Don't have an account yet?</span>
+        All accounts must be created by a system admin through the user management tool, please contact your line manager or IT!
+      </div>
+    </div>
+  </div>
+</div>

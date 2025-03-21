@@ -1,0 +1,30 @@
+<div [style.background]="color" class="py-2 px-2 flex flex-col" [style.borderTop]="border" [style.borderBottom]="border">
+  <div class="flex items-center justify-between flex-row">
+    <h1 class="text-white text-xl">
+      {{ call.resource.callSign }} -
+      <span [style.color]="brightColor" style="text-shadow: 2px 2px 2px #0000007a">{{ call.resource.status }}</span> -
+      {{ call.assigned }} open calls
+    </h1>
+
+    <select
+      [value]="call.resource.status"
+      style="border: solid 2px rgb(82 82 82)"
+      class="w-[150px] border-neutral-600 bg-neutral-700 px-2 py-1 rounded-md border-2"
+      (change)="changeStatus($any($event.target).value)"
+    >
+      <option value="GREEN">GREEN</option>
+      <option value="RED">RED</option>
+      <option value="BREAK">BREAK</option>
+      <option value="CLEAR">CLEAR</option>
+      <option value="ONSCENE">ONSCENE</option>
+      <option value="ENROUTE">ENROUTE</option>
+      <option value="SHIFT_END">SHIFT_END</option>
+    </select>
+  </div>
+
+  <div>
+    <div *ngFor="let callIn of call.calls; let i = index">
+      <resources-overview-call-card [call]="callIn" [index]="i"></resources-overview-call-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="userManagement">
+      <h2 data-cy="userManagementDetailsHeading"><span>User Management</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ userManagement.id }}</span>
+        </dd>
+        <dt><span>User Role</span></dt>
+        <dd>
+          <div *ngIf="userManagement.userRole">
+            <a [routerLink]="['/user-role', userManagement.userRole.id, 'view']">{{ userManagement.userRole.id }}</a>
+          </div>
+        </dd>
+        <dt><span>User Perms</span></dt>
+        <dd>
+          <div *ngIf="userManagement.userPerms">
+            <a [routerLink]="['/user-perms', userManagement.userPerms.id, 'view']">{{ userManagement.userPerms.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-management', userManagement.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

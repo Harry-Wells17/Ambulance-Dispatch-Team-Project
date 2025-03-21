@@ -1,0 +1,227 @@
+<div
+  *ngIf="showSuccess"
+  class="fixed bottom-0 right-0 z-[1000] min-w-[300px] bg-neutral-800 m-10 text-white flex flex-row items-center justify-between rounded-md overflow-hidden"
+>
+  <div class="h-[80px] w-[4px] bg-green-500 mr-2"></div>
+  <div class="py-2 pr-4 flex-grow ml-2">
+    <h1 class="text-3xl">Success</h1>
+    <p class="text-sm text-neutral-400">The Call was successfully updated!</p>
+  </div>
+</div>
+
+<div
+  *ngIf="showError"
+  class="fixed bottom-0 right-0 z-[1000] min-w-[300px] bg-neutral-800 m-10 text-white flex flex-row items-center justify-between rounded-md overflow-hidden"
+>
+  <div class="h-[80px] w-[4px] bg-red-500 mr-2"></div>
+  <div class="py-2 pr-4 flex-grow ml-2">
+    <h1 class="text-3xl">Failed</h1>
+    <p class="text-sm text-neutral-400">The Call was unable to be updated, please try again!</p>
+  </div>
+</div>
+
+<div class="fixed top-0 left-0 overflow-hidden text-white" style="z-index: 1001">
+  <div class="w-[100vw] overflow-y-scroll max-h-[90vh] min-h-[100vh] bg-opacity-50 bg-neutral-950 top-0 left-0 flex justify-center">
+    <div
+      class="bg-neutral-800 min-w-[30vw] min-h-[100px] h-max mt-5 mb-5 rounded-lg border-2 border-neutral-700 shadow-lg shadow-white p-3"
+    >
+      <div class="w-full flex items-center justify-between">
+        <h1 class="text-3xl">Update Call - {{ editForm.controls.type.value }}</h1>
+        <button aria-label="cancel update call" class="button bg-red-600 hover:bg-red-700" (click)="hideCreateNewCall()">Cancel</button>
+      </div>
+      <form name="editForm" role="form" novalidate (ngSubmit)="create()" [formGroup]="editForm">
+        <div class="mt-2">
+          <h1>Call Category:</h1>
+          <div class="w-full flex items-center justify-center flex-row space-x-1 mt-2">
+            <button
+              aria-label="set category 1"
+              type="button"
+              class="button bg-red-700 w-full"
+              (click)="selectCatagory('CAT1')"
+              aria-label="Category 1 Call"
+            >
+              Cat 1
+            </button>
+            <button
+              aria-label="set category 2"
+              type="button"
+              class="button bg-red-800 w-full"
+              (click)="selectCatagory('CAT2')"
+              aria-label="Category 2 Call"
+            >
+              Cat 2
+            </button>
+            <button
+              aria-label="set category 3"
+              type="button"
+              class="button bg-red-900 w-full"
+              (click)="selectCatagory('CAT3')"
+              aria-label="Category 3 Call"
+            >
+              Cat 3
+            </button>
+            <button
+              aria-label="set category 4"
+              type="button"
+              class="button bg-blue-800 w-full"
+              (click)="selectCatagory('CAT4')"
+              aria-label="Category 4 Call"
+            >
+              Cat 4
+            </button>
+            <button
+              aria-label="set category 5"
+              type="button"
+              class="button bg-green-500 w-full"
+              (click)="selectCatagory('CAT5')"
+              aria-label="Category 5 Call"
+            >
+              Cat 5
+            </button>
+          </div>
+
+          <h1 class="mt-3">Age:</h1>
+
+          <input
+            aria-label="enter new age"
+            type="number"
+            class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+            placeholder="Enter the patients age..."
+            aria-label="Enter patients age"
+            [formControl]="editForm.controls.age"
+            aria-required="true"
+          />
+          <h1 class="mt-3">Gender Assigned at Birth</h1>
+          <input
+            aria-label="enter new gender"
+            type="text"
+            class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+            placeholder="Enter the sex..."
+            aria-label="Enter gender assigned at birth"
+            [formControl]="editForm.controls.sexAssignedAtBirth"
+            aria-required="true"
+          />
+          <div class="flex flex-row space-x-1 my-2">
+            <button aria-label="set sex male" class="button bg-red-600" (click)="quickActionSex('MALE')" type="button">Male</button>
+            <button aria-label="set sex female" class="button bg-green-600" (click)="quickActionSex('FEMALE')" type="button">Female</button>
+          </div>
+          <h1 class="mt-3">History</h1>
+          <textarea
+            name="eventDescription"
+            class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+            placeholder="Enter the incident history..."
+            aria-label="Enter incident history"
+            [formControl]="editForm.controls.history"
+            aria-required="true"
+          ></textarea>
+          <h1 class="mt-3">Injuries</h1>
+          <textarea
+            class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+            placeholder="Enter the patients injuries..."
+            aria-label="Enter injury information"
+            [formControl]="editForm.controls.injuries"
+            aria-required="true"
+          ></textarea>
+          <div class="flex flex-row space-x-1 my-1">
+            <button aria-label="set major injury" class="button bg-red-600" (click)="quickActionInjuries('Major - ')" type="button">
+              Major
+            </button>
+            <button aria-label="set minor injury" class="button bg-green-600" (click)="quickActionInjuries('Minor - ')" type="button">
+              Minor
+            </button>
+          </div>
+          <h1 class="mt-3">Condition</h1>
+          <textarea
+            class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+            placeholder="Enter the patients condition..."
+            aria-label="Enter patients condition"
+            [formControl]="editForm.controls.condition"
+            aria-required="true"
+          ></textarea>
+
+          <div class="flex flex-row space-x-1 my-1">
+            <button
+              aria-label="set condition alert"
+              class="px-3 button bg-green-600"
+              (click)="quickActionCondition('Alert - ')"
+              type="button"
+            >
+              A
+            </button>
+            <button
+              aria-label="set condition confused"
+              class="px-3 button bg-white text-black"
+              (click)="quickActionCondition('Confused - ')"
+              type="button"
+            >
+              C
+            </button>
+            <button
+              aria-label="set condition voice"
+              class="px-3 button bg-blue-600"
+              (click)="quickActionCondition('Voice - ')"
+              type="button"
+            >
+              V
+            </button>
+            <button
+              aria-label="set condition pain"
+              class="px-3 button bg-orange-600"
+              (click)="quickActionCondition('Pain - ')"
+              type="button"
+            >
+              P
+            </button>
+            <button
+              aria-label="set condition unresponsive"
+              class="px-3 button bg-red-600"
+              (click)="quickActionCondition('Unresponsive - ')"
+              type="button"
+            >
+              U
+            </button>
+          </div>
+
+          <div class="flex flex-row space-x-1 my-1">
+            <button
+              aria-label="set condition minor bleed"
+              class="px-3 button bg-green-600"
+              (click)="quickActionCondition('Minor Bleed - ')"
+              type="button"
+            >
+              Minor Bleed
+            </button>
+            <button
+              aria-label="set condtion major bleed"
+              class="px-3 button bg-green-600"
+              (click)="quickActionCondition('Major Bleed - ')"
+              type="button"
+            >
+              Major Bleed
+            </button>
+            <button
+              aria-label="set condition catastrophic hemorrhage"
+              class="px-3 button bg-gradient-to-r from-red-500 to-orange-500"
+              type="button"
+              (click)="quickActionCondition('Catastrophic Hemorrhage - ')"
+            >
+              Catastrophic Hemorrhage
+            </button>
+          </div>
+
+          <h1 class="mt-3">Location:</h1>
+          <div id="map-container" class="relative min-h-[400px] w-full overflow-hidden rounded-lg">
+            <<<<<<< HEAD
+            <div id="map-element-3" class="absolute w-full h-full top-0 left-0"></div>
+            =======
+            <div id="map-element-2" lass="absolute w-full h-full top-0 left-0"></div>
+            >>>>>>> 72028965b3aea6c2164f45a0bde89c0b5f5c0eae
+          </div>
+        </div>
+        <div class="mt-10 flex w-full">
+          <button aria-label="update call" type="submit" class="button bg-green-600 hover:bg-green-700 w-full">Update Call</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

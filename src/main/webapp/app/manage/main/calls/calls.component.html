@@ -1,0 +1,34 @@
+<div class="w-full h-full">
+  <div class="border-2 border-neutral-700 rounded-md w-full shadow-lg flex items-center justify-center flex-col py-2 h-full">
+    <!-- this is the create call feature for my MVP <- Harvey -->
+    <div></div>
+    <h1 class="text-4xl text-neutral-300 mb-1">Calls</h1>
+    <div class="flex flex-row mt-1 mb-2">
+      <h1 class="text-neutral-200 mr-4">Show Closed Calls:</h1>
+      <input
+        [checked]="showClosedCalls"
+        (click)="changedClosedBound()"
+        aria-label="check to show committed resources"
+        checked
+        type="checkbox"
+        style="transform: scale(2)"
+        class="mr-4 ml-4"
+      />
+    </div>
+    <div class="min-h-[400px] w-full flex-grow">
+      <div *ngFor="let call of calls" class="w-full">
+        <call-card-overview [refresh]="recieveRequestToRefreshBound" [emergencyCall]="call"></call-card-overview>
+      </div>
+      <div *ngIf="calls?.length === 0" class="w-full flex items-center justify-center mt-4">
+        <h1 class="text-2xl">No Calls to display...</h1>
+      </div>
+    </div>
+    <create-calls-component [myCallback]="theBoundCallback" (refreshCalls)="recieveRequestToRefresh()"> </create-calls-component>
+    <assignResource-component
+      edit="true"
+      *ngIf="showAssignResource"
+      [call]="currentCall"
+      [close]="thecloseBound"
+    ></assignResource-component>
+  </div>
+</div>

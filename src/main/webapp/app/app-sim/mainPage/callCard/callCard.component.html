@@ -1,0 +1,38 @@
+<div class="bg-red-500 w-full h-max p-2 mb-1">
+  <div>
+    <div class="flex items-center justify-start flex-row">
+      <h1>
+        <span class="text-xl"
+          ><strong>{{ emergencyCall.type }}</strong></span
+        >
+      </h1>
+      <h1>
+        <span class="text-sm ml-1">- Call Created {{ time(resourceAssigned.callRecievedTime) }} ago</span>
+      </h1>
+    </div>
+
+    <h1>
+      <span><strong>A/S</strong></span> <span class="text-sm">- {{ emergencyCall.age }} {{ emergencyCall.sexAssignedAtBirth }}</span>
+    </h1>
+
+    <h1>
+      <span><strong>H</strong></span> <span class="text-sm">- {{ emergencyCall.history }}</span>
+    </h1>
+    <h1>
+      <span><strong>I</strong></span> <span class="text-sm">- {{ emergencyCall.injuries }}</span>
+    </h1>
+    <h1>
+      <span><strong>C</strong></span> <span class="text-sm">- {{ emergencyCall.condition }}</span>
+    </h1>
+
+    <div class="mt-2 w-full flex items-center justify-center" *ngIf="getState() !== ''">
+      <button
+        (click)="reqChangeStateBound()"
+        style="border: 2px solid rgb(115 115 115)"
+        class="w-[80%] bg-neutral-600 hover:bg-neutral-500 hover:cursor-pointer rounded-lg px-2 py-1"
+      >
+        {{ getState() }}
+      </button>
+    </div>
+  </div>
+</div>

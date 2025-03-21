@@ -1,0 +1,14 @@
+<div class="flex flex-row items-center justify-between">
+  <div class="flex flex-row space-x-2">
+    <h1>{{ index + 1 }}.)</h1>
+    <h1>{{ call.assinged.type }} -</h1>
+    <h1>{{ call.assinged.age }} {{ call.assinged.sexAssignedAtBirth }} -</h1>
+    <h1>{{ call.assinged.injuries }} -</h1>
+    <h1>{{ timeAgo }} ago</h1>
+  </div>
+  <div class="w-[150px] flex items-center justify-center">
+    <h1 class="text-lg">
+      <strong>{{ minStatus }}</strong>
+    </h1>
+  </div>
+</div>

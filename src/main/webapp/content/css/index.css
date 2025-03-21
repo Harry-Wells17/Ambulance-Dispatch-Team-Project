@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+#map-element {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+#map-element-2 {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.flash {
+  z-index: 100000;
+  position: fixed;
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+}
+
+.text-add {
+  color: black;
+  font-size: xx-large;
+}
+
+.flash-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+#map-element-3 {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}

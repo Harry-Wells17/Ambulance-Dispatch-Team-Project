@@ -1,0 +1,4 @@
+<button class="px-2 py-2 rounded-lg bg-green-600 hover:bg-green-700 hover:cursor-pointer" (click)="open()">Open Call</button>
+<div *ngIf="view">
+  <edit-calls-component [callId]="callId" [close]="closeNotBound"></edit-calls-component>
+</div>

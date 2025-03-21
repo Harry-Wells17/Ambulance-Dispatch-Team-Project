@@ -1,0 +1,133 @@
+<div>
+  <h2 id="page-heading" data-cy="SystemLogHeading">
+    <span>System Logs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-system-log"
+        [routerLink]="['/system-log/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new System Log </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="systemLogs?.length === 0">
+    <span>No System Logs found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="systemLogs && systemLogs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span>Created At</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="logType">
+            <div class="d-flex">
+              <span>Log Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="messageContent">
+            <div class="d-flex">
+              <span>Message Content</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span>Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="emergencyCall.id">
+            <div class="d-flex">
+              <span>Emergency Call</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="event.id">
+            <div class="d-flex">
+              <span>Event</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let systemLog of systemLogs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/system-log', systemLog.id, 'view']">{{ systemLog.id }}</a>
+          </td>
+          <td>{{ systemLog.createdAt | formatMediumDatetime }}</td>
+          <td>{{ systemLog.logType }}</td>
+          <td>{{ systemLog.messageContent }}</td>
+          <td>
+            {{ systemLog.createdBy?.login }}
+          </td>
+          <td>
+            <div *ngIf="systemLog.emergencyCall">
+              <a [routerLink]="['/emergency-call', systemLog.emergencyCall.id, 'view']">{{ systemLog.emergencyCall.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="systemLog.event">
+              <a [routerLink]="['/event', systemLog.event.id, 'view']">{{ systemLog.event.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/system-log', systemLog.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/system-log', systemLog.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(systemLog)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

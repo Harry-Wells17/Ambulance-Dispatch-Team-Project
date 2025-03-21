@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ResourceAssigned.
+    -->
+    <changeSet id="20240304174740-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="resource_id"
+                                 baseTableName="resource_assigned"
+                                 constraintName="fk_resource_assigned__resource_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="resource"/>
+
+        <addForeignKeyConstraint baseColumnNames="emergency_call_id"
+                                 baseTableName="resource_assigned"
+                                 constraintName="fk_resource_assigned__emergency_call_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="emergency_call"/>
+    </changeSet>
+</databaseChangeLog>

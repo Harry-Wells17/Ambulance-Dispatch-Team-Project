@@ -1,0 +1,133 @@
+<div class="w-[100vw] overflow-hidden h-full min-h-[100vh] text-white">
+  <div class="w-[100vw] min-h-[70vh] p-20 flex items-center justify-center mb-0 flex-row">
+    <div class="w-full flex-grow min-w-[750px]">
+      <h1 class="text-7xl text-white"><strong>Ambulance Dispatch</strong></h1>
+      <h1 class="text-red-400 text-3xl">Providing a slick and efficient platform that saves lives!</h1>
+      <div class="mt-4">
+        <div [ngSwitch]="account !== null">
+          <div *ngSwitchCase="true">
+            <a [routerLink]="['/events']">
+              <Button aria-label="view active events page" class="text-white bg-red-500 hover:bg-red-600 button"
+                >View Active Events
+              </Button>
+            </a>
+            <a (click)="logout()" id="logout" data-cy="logout">
+              <Button aria-label="sign out" class="text-white bg-orange-600 hover:bg-orange-700 button ml-2">Sign Out</Button>
+            </a>
+            <a [routerLink]="['/gdpr']">
+              <Button aria-label="open GDPR notice" class="text-white bg-slate-500 hover:bg-slate-600 button ml-2">GDPR Notice </Button>
+            </a>
+          </div>
+          <div *ngSwitchCase="false">
+            <a [routerLink]="['/login']">
+              <Button aria-label="sign in" class="text-white bg-red-500 hover:bg-red-600 button">Sign In </Button>
+            </a>
+            <Button aria-label="open contact form" class="text-white bg-orange-600 hover:bg-orange-700 button ml-2">Get In Contact</Button>
+            <a [routerLink]="['/gdpr']">
+              <Button aria-label="open GDPR notice" class="text-white bg-slate-500 hover:bg-slate-600 button ml-2">GDPR Notice </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full pl-5 bg-blue h-[60vh] relative">
+      <div class="absolute top-[-5vh] w-full">
+        <div class="flex w-full items-center justify-center mb-2">
+          <h1 class="text-2xl">Call Management Example:</h1>
+        </div>
+
+        <home-card *ngFor="let callIn of list" [dataIn]="callIn"></home-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-full min-h-[30vh] pt-10 mb-20">
+  <div class="flex justify-center flex-col w-[100vw] items-center">
+    <div class="w-full flex items-center justify-center flex-col">
+      <h1 class="text-white text-5xl">Features</h1>
+      <p class="text-neutral-300">Why should you use our Ambulance Dispatch software?</p>
+      <div class="flex items-center justify-between w-full px-20 py-10 space-x-4">
+        <div class="h-min min-h-[300px] bg-neutral-900 w-full flex flex-col items-center justify-center rounded-lg p-3">
+          <h1 class="text-3xl text-blue-400"><strong>Event Management</strong></h1>
+          <div class="h-full w-full flex-grow p-4">
+            <p class="text-sm text-neutral-400">
+              Our unique event managment system allows users to view all relevant information about an event in a single page. Important
+              information like calls, resources, breaks and location are all shown along with the log, provinding an all-in-one interface to
+              gather any information about an event. This makes for quick and easy management of events to assist rapid and efficient
+              responces to calls, ensuring patients get seen to in a timely manner.
+            </p>
+          </div>
+        </div>
+
+        <div class="h-min min-h-[300px] bg-neutral-900 w-full flex flex-col items-center justify-center rounded-lg p-3">
+          <h1 class="text-3xl text-orange-400"><strong>Interactive Map</strong></h1>
+          <div class="h-full w-full flex-grow p-4">
+            <p class="text-sm text-neutral-400">
+              Our state of the art interactive map provides users with a simple view of the locations of all calls and resources in
+              real-time. Each call is marked with a pin, placed by the user that creates the call, which displays important information
+              about the call. Each resource is marked with an approprite symbol and its location is updated frequently to allow other users
+              to keep track of their location at all times. The map also uses a dark mode filter which reduses strain on users' eyes along
+              with battery usage.
+            </p>
+          </div>
+        </div>
+
+        <div class="h-min min-h-[300px] bg-neutral-900 w-full flex flex-col items-center justify-center rounded-lg p-3">
+          <h1 class="text-3xl text-green-400"><strong>Spinning Ambulance</strong></h1>
+          <div class="h-full w-full flex-grow p-4">
+            <p class="text-sm text-neutral-400">
+              Our signature spinning ambulance at the bottom of the home page is a core feature of the application. The immense detail along
+              with the constant flashing blue lights give the user an experiance like no other, up close and personal with a realistic
+              ambulance. This feature was painstakingly built by our dev team to create a soothing visual expericance for all users when
+              paired with the elegant dark style of the webpage.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-[100vw] flex items-center flex-row justify-center relative h-[100vh] mb-[-200px] mt-[-200px]">
+  <div class="z-[100] pt-10">
+    <div class="w-full min-h-[30vh] pt-20">
+      <div class="flex justify-center flex-col w-[100vw] items-center">
+        <div class="w-full flex items-center justify-center flex-col">
+          <h1 class="text-white text-8xl text-shadow">Interested?</h1>
+          <p class="text-neutral-300 text-shadow">
+            Get in contact and see how we can revolution your dispatch software and optimise efficieny and communiation.
+          </p>
+          <div class="mt-10 w-full flex items-center justify-center">
+            <Button aria-label="open contact form" class="button bg-green-600 hover:bg-green-700 drop-shadow-xl"> Get In Contact </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ambulance-rotate></ambulance-rotate>
+
+<!--
+
+     <div [ngSwitch]="account !== null">
+      <div class="alert alert-success" *ngSwitchCase="true">
+        <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        <span>If you want to </span>
+        <a class="alert-link" (click)="login()">sign in</a
+        ><span
+          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
+          password="user").</span
+        >
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        <span>You don't have an account yet?</span>&nbsp;
+        <a class="alert-link" routerLink="account/register">Register a new account</a>
+      </div>
+    </div>
+-->

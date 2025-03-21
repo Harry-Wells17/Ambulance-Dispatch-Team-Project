@@ -1,0 +1,110 @@
+<div class="fixed top-0 left-0 overflow-hidden text-white" style="z-index: 1001">
+  <div class="w-[100vw] overflow-y-scroll max-h-[90vh] min-h-[100vh] bg-opacity-50 bg-neutral-950 top-0 left-0 flex justify-center">
+    <div
+      class="bg-neutral-800 min-w-[30vw] min-h-[100px] h-max mt-5 mb-5 rounded-lg border-2 border-neutral-700 shadow-lg shadow-white p-3"
+    >
+      <div class="w-full">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl">Assign Resources:</h1>
+
+          <button aria-label="close popup" class="hover:bg-neutral-700 bg-neutral-600 px-3 py-2 rounded-lg ml-2" (click)="close()">
+            x
+          </button>
+        </div>
+
+        <h1 class="mt-8 text-2xl">Current Resources:</h1>
+        <div class="w-full mt-2">
+          <div *ngIf="resourcesAlreadyCommited.length === 0" class="w-full flex items-center justify-center">
+            <h1>No Resource to committed...</h1>
+          </div>
+          <div *ngFor="let x of resourcesAlreadyCommited" class="flex flex-row space-x-2 py-1">
+            <h1 class="text-lg">
+              <span class="font-bold text-neutral-200">{{ x.resource.callSign }}</span> -
+              <span [style.color]="x.color"
+                ><strong>{{ x.resource.status }}</strong></span
+              >
+              -
+              <span class="text-neutral-300">{{ x.distance }} m</span>
+              <button
+                aria-label="unassign resource"
+                class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded-md hover:cursor-pointer ml-2"
+                (click)="removeResource(x.resource, x.resourceAssigned)"
+              >
+                Remove
+              </button>
+            </h1>
+          </div>
+        </div>
+
+        <h1 class="mt-8 text-2xl">Additional Resources:</h1>
+        <div class="w-full mt-2">
+          <div *ngIf="resourcesNotCommited.length === 0" class="w-full flex items-center justify-center">
+            <h1>No Resource to commit...</h1>
+          </div>
+          <div *ngFor="let x of resourcesNotCommited" class="flex flex-row space-x-2 py-1">
+            <h1 class="text-lg">
+              <span class="font-bold text-neutral-200">{{ x.resource.callSign }}</span> -
+              <span [style.color]="x.color"
+                ><strong>{{ x.resource.status }}</strong></span
+              >
+              -
+              <span class="text-neutral-300">{{ x.distance }} m</span>
+              <button
+                aria-label="add resource"
+                class="bg-green-600 hover:bg-green-700 px-2 py-1 rounded-md hover:cursor-pointer ml-2"
+                (click)="addResource(x.resource)"
+              >
+                Add
+              </button>
+            </h1>
+          </div>
+        </div>
+
+        <h1 class="mt-8 text-2xl">Resources that have cleared:</h1>
+        <div class="w-full mt-2">
+          <div *ngIf="resourcesLeftScene.length === 0" class="w-full flex items-center justify-center">
+            <h1>No Resource to commit...</h1>
+          </div>
+          <div *ngFor="let x of resourcesLeftScene" class="flex flex-row space-x-2 py-1">
+            <h1 class="text-lg">
+              <span class="font-bold text-neutral-200">{{ x.resource.callSign }}</span> -
+              <span [style.color]="x.color"
+                ><strong>{{ x.resource.status }}</strong></span
+              >
+              -
+              <span class="text-neutral-300">{{ x.distance }} m</span>
+            </h1>
+          </div>
+        </div>
+
+        <div class="mt-4 w-full flex items-center justify-center">
+          <button aria-label="refresh resources" class="w-[80%] bg-neutral-700 hover:bg-neutral-800 px-4 py-2 rounded-lg" (click)="load()">
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="showCommitted"
+  class="fixed bottom-0 right-0 z-[1000] min-w-[300px] bg-neutral-800 m-10 text-white flex flex-row items-center justify-between rounded-md overflow-hidden"
+>
+  <div class="h-[80px] w-[4px] bg-green-500 mr-2"></div>
+  <div class="py-2 pr-4 flex-grow ml-2">
+    <h1 class="text-3xl">Success</h1>
+    <p class="text-sm text-neutral-400">The resource was successfully assigned!</p>
+  </div>
+</div>
+
+<div
+  *ngIf="showCommitted2"
+  class="fixed bottom-0 right-0 z-[1000] min-w-[300px] bg-neutral-800 m-10 text-white flex flex-row items-center justify-between rounded-md overflow-hidden"
+>
+  <div class="h-[80px] w-[4px] bg-green-500 mr-2"></div>
+  <div class="py-2 pr-4 flex-grow ml-2">
+    <h1 class="text-3xl">Success</h1>
+    <p class="text-sm text-neutral-400">The resource was successfully removed!</p>
+  </div>
+</div>

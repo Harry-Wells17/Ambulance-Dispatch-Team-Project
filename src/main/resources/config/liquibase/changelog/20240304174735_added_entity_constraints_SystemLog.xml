@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity SystemLog.
+    -->
+    <changeSet id="20240304174735-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="system_log"
+                                 constraintName="fk_system_log__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="emergency_call_id"
+                                 baseTableName="system_log"
+                                 constraintName="fk_system_log__emergency_call_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="emergency_call"/>
+
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="system_log"
+                                 constraintName="fk_system_log__event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,176 @@
+
+
+entity SystemLog {  
+    createdAt ZonedDateTime required
+    logType LogType required
+    messageContent TextBlob required  
+} 
+
+entity UserPerms {
+    perms Perms required
+}
+
+entity ResourceBreaks { 
+    lastBreak ZonedDateTime required
+    breakRequested Boolean required
+    startedBreak ZonedDateTime
+    onBreak Boolean
+}  
+
+entity GeoLocation {  
+    latitude Float required
+    longitude Float required
+}  
+
+entity Resource {  
+    created ZonedDateTime required
+    type ResourceType required
+    status Status required
+    callSign String required
+    latitude Float required
+    longitude Float required
+} 
+
+entity ResourceAssigned {
+    callRecievedTime ZonedDateTime required
+    onSceneTime ZonedDateTime
+    leftSceneTime ZonedDateTime
+    arrivedHospitalTime ZonedDateTime
+    clearHospitalTime ZonedDateTime
+    greenTime ZonedDateTime
+
+    unAssignedTime ZonedDateTime
+}
+
+entity EmergencyCall {
+    created ZonedDateTime required
+    open Boolean
+	type CallCategory
+    age Integer
+    sexAssignedAtBirth Sex
+    history String
+    injuries String
+    condition String
+    latitude Float required
+    longitude Float required
+    closed Boolean
+}
+
+
+entity Event {
+    created String required
+    eventName String required
+    eventDescription TextBlob required
+}
+
+entity UserRole {
+    role Role
+}
+
+
+enum Perms {  
+    CREATE_EVENT,
+    CREATE_CALL,   
+    CLOSE_CALL,   
+    MANAGE_CALL_RESOURCE,
+    MANAGE_RESOURCES,
+    ADDLOG,  
+    MANAGE_BREAKS,
+
+    ADMIN  
+}  
+
+
+entity UserExist {
+    exist Boolean
+}
+
+
+entity UserManagement {
+
+}
+ 
+
+enum CallCategory {  
+
+    CAT1, CAT2, CAT3, CAT4, CAT5  
+
+}  
+
+ 
+
+enum Role {  
+    MANAGEMENT,
+    CONTROL_ROOM_MANAGER
+    DISPATCHER, 
+    LOGGIST, 
+    CLINICIAN
+}  
+
+ 
+
+enum LogType {  
+    CONTROLROOM (Control_Room), 
+    CALL (Call_Log),
+    RESOURCE (Resource_Log),
+    BREAKLOG (Break_Log)
+    
+}  
+
+ 
+
+enum Sex {  
+
+    MALE, FEMALE  
+
+}   
+
+ 
+
+enum Status {  
+
+    RED, GREEN, BREAK, CLEAR, ONSCENE, ENROUTE, SHIFT_END
+
+}  
+
+ 
+
+enum ResourceType {  
+
+    AMBULANCE, CYCLERESPONSE, FOOTTEAM, LOGISTICS, MANAGEMENT, TREATMENTCENTRE  
+
+}  
+
+
+
+relationship ManyToOne {
+    SystemLog{createdBy(login) required} to User
+    EmergencyCall{createdBy(login) required} to User
+
+    UserExist{createdBy(login)} to User
+    ResourceAssigned{Resource} to Resource
+}
+
+
+
+relationship OneToOne {
+    Resource{ResourceBreak required} to ResourceBreaks
+}
+
+
+
+relationship OneToOne {
+    UserManagement to UserRole
+}
+
+relationship OneToMany {
+    EmergencyCall to ResourceAssigned
+    EmergencyCall to SystemLog
+    Event{Resources} to Resource
+    Event{systemCalls} to EmergencyCall
+    Event{systemLog} to SystemLog
+
+    UserPerms to UserManagement 
+}
+
+filter all

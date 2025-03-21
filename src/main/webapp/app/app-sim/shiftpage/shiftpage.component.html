@@ -1,0 +1,16 @@
+<div class="flex items-center justify-center h-full flex-col">
+  <h1>Welcome, please enter the shift ID:</h1>
+  <div class="w-full flex items-center justify-center mt-2">
+    <input
+      type="text"
+      style="border: 2px solid rgb(82 82 82); outline: none"
+      placeholder="Enter..."
+      [value]="setId"
+      (change)="boundChange($any($event.target).value)"
+      class="outline-none h-[30px] pb-1 bg-neutral-700 w-[60%] text-white font-bold text-2xl text-center rounded-lg"
+    />
+    <button (click)="boundSearch()" class="bg-green-500 px-1 mx-2 items-center h-[30px] rounded-lg text-white font-bold text-lg">
+      Submit
+    </button>
+  </div>
+</div>

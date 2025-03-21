@@ -1,0 +1,103 @@
+<div>
+  <h2 id="page-heading" data-cy="UserManagementHeading">
+    <span>User Managements</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-management"
+        [routerLink]="['/user-management/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new User Management </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="userManagements?.length === 0">
+    <span>No User Managements found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="userManagements && userManagements.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="userRole.id">
+            <div class="d-flex">
+              <span>User Role</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="userPerms.id">
+            <div class="d-flex">
+              <span>User Perms</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userManagement of userManagements; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/user-management', userManagement.id, 'view']">{{ userManagement.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="userManagement.userRole">
+              <a [routerLink]="['/user-role', userManagement.userRole.id, 'view']">{{ userManagement.userRole.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="userManagement.userPerms">
+              <a [routerLink]="['/user-perms', userManagement.userPerms.id, 'view']">{{ userManagement.userPerms.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/user-management', userManagement.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/user-management', userManagement.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(userManagement)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

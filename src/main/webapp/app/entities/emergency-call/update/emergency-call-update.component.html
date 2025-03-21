@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-emergency-call-heading" data-cy="EmergencyCallCreateUpdateHeading">Create or edit a Emergency Call</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_created">Created</label>
+          <div class="d-flex">
+            <input
+              id="field_created"
+              data-cy="created"
+              type="datetime-local"
+              class="form-control"
+              name="created"
+              formControlName="created"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('created')!.invalid && (editForm.get('created')!.dirty || editForm.get('created')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('created')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('created')?.errors?.datetimelocal">
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_open">Open</label>
+          <input type="checkbox" class="form-check" name="open" id="field_open" data-cy="open" formControlName="open" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_type">Type</label>
+          <select class="form-control" name="type" formControlName="type" id="field_type" data-cy="type">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let callCategory of callCategoryValues" [value]="callCategory">callCategory</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_age">Age</label>
+          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sexAssignedAtBirth">Sex Assigned At Birth</label>
+          <select
+            class="form-control"
+            name="sexAssignedAtBirth"
+            formControlName="sexAssignedAtBirth"
+            id="field_sexAssignedAtBirth"
+            data-cy="sexAssignedAtBirth"
+          >
+            <option [ngValue]="null"></option>
+            <option *ngFor="let sex of sexValues" [value]="sex">sex</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_history">History</label>
+          <input type="text" class="form-control" name="history" id="field_history" data-cy="history" formControlName="history" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_injuries">Injuries</label>
+          <input type="text" class="form-control" name="injuries" id="field_injuries" data-cy="injuries" formControlName="injuries" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_condition">Condition</label>
+          <input type="text" class="form-control" name="condition" id="field_condition" data-cy="condition" formControlName="condition" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+          <div *ngIf="editForm.get('latitude')!.invalid && (editForm.get('latitude')!.dirty || editForm.get('latitude')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('latitude')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('latitude')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+          <div *ngIf="editForm.get('longitude')!.invalid && (editForm.get('longitude')!.dirty || editForm.get('longitude')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('longitude')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('longitude')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_closed">Closed</label>
+          <input type="checkbox" class="form-check" name="closed" id="field_closed" data-cy="closed" formControlName="closed" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdBy">Created By</label>
+          <select
+            class="form-control"
+            id="field_createdBy"
+            data-cy="createdBy"
+            name="createdBy"
+            formControlName="createdBy"
+            [compareWith]="compareUser"
+          >
+            <option *ngIf="!editForm.get('createdBy')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['createdBy'])!.invalid && (editForm.get(['createdBy'])!.dirty || editForm.get(['createdBy'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['createdBy'])?.errors?.required"> This field is required. </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_event">Event</label>
+          <select class="form-control" id="field_event" data-cy="event" name="event" formControlName="event" [compareWith]="compareEvent">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventOption" *ngFor="let eventOption of eventsSharedCollection">{{ eventOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

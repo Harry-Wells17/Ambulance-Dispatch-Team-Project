@@ -1,0 +1,36 @@
+<div class="border-2 border-neutral-700 rounded-md w-full shadow-lg justify-center flex-col overflow-hidden">
+  <div class="w-full flex items-center justify-center mt-2 flex-col">
+    <h1 class="text-4xl text-neutral-300">Resources</h1>
+    <div class="flex flex-row mt-1 mb-2">
+      <h1 class="text-neutral-200 mr-4">Show End Shift Resources:</h1>
+      <input
+        (click)="changeViewBound()"
+        [checked]="showEndShift"
+        aria-label="check to show committed resources"
+        checked
+        type="checkbox"
+        class="mr-4 ml-4"
+        style="transform: scale(2)"
+      />
+    </div>
+  </div>
+
+  <div class="flex-grow mt-2 h-full" style="overflow: auto; height: 610px" *ngIf="large === false">
+    <div *ngFor="let call of finalOutput">
+      <resources-overview-card [call]="call" [reload]="reload"></resources-overview-card>
+    </div>
+
+    <div *ngIf="finalOutput?.length === 0" class="w-full flex items-center justify-center mt-4">
+      <h1 class="text-2xl">No Resources to display...</h1>
+    </div>
+  </div>
+  <div class="flex-grow mt-2 max-h-[92.5vh] h-full" style="overflow: auto; height: 92.5vh" *ngIf="large === true">
+    <div *ngFor="let call of finalOutput">
+      <resources-overview-card [call]="call" [reload]="reload"></resources-overview-card>
+    </div>
+
+    <div *ngIf="finalOutput?.length === 0" class="w-full flex items-center justify-center mt-4">
+      <h1 class="text-2xl">No Resources to display...</h1>
+    </div>
+  </div>
+</div>

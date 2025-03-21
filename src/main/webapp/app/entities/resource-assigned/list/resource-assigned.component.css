@@ -1,0 +1,17 @@
+/* Red card */
+.card.bg-danger {
+  border: 1px solid #dc3545;
+  background-color: #f8d7da;
+}
+
+/* Green card */
+.card.bg-success {
+  border: 1px solid #28a745;
+  background-color: #d4edda;
+}
+
+/* Yellow card */
+.card.bg-warning {
+  border: 1px solid #ffc107;
+  background-color: #fff3cd;
+}

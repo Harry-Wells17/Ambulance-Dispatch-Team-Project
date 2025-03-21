@@ -1,0 +1,68 @@
+<div class="fixed top-0 left-0 overflow-hidden text-white" style="z-index: 1001">
+  <div class="w-[100vw] overflow-y-scroll max-h-[90vh] min-h-[100vh] bg-opacity-50 bg-neutral-950 top-0 left-0 flex justify-center">
+    <div
+      class="bg-neutral-800 min-w-[30vw] min-h-[100px] h-max mt-5 mb-5 rounded-lg border-2 border-neutral-700 shadow-lg shadow-white p-3"
+    >
+      <div class="w-full">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl">Assign Resources:</h1>
+
+          <button aria-label="close popup" class="hover:bg-neutral-700 bg-neutral-600 px-3 py-2 rounded-lg ml-2" (click)="close()">
+            x
+          </button>
+        </div>
+
+        <div class="flex flex-row mt-2">
+          <h1 class="text-neutral-200 mr-4">Show Committed Resources:</h1>
+          <input
+            aria-label="check to show committed resources"
+            checked
+            type="checkbox"
+            class="mr-4 ml-4"
+            style="transform: scale(2)"
+            [checked]="showCommited"
+            (input)="changeCommited()"
+          />
+        </div>
+
+        <h1 class="mt-8 text-2xl">Resources:</h1>
+        <div class="w-full mt-2">
+          <div *ngIf="renderResource.length === 0" class="w-full flex items-center justify-center">
+            <h1>No Resource to commit...</h1>
+          </div>
+          <div *ngFor="let x of renderResource" class="flex flex-row space-x-2">
+            <input
+              aria-label="commit resource"
+              checked
+              type="checkbox"
+              class="mr-4 ml-2"
+              style="transform: scale(2)"
+              [checked]="resourcesToCommit.includes(x.resource)"
+              (input)="commitResource(x.resource)"
+            />
+            <h1 class="text-lg">
+              <span class="font-bold text-neutral-200">{{ x.resource.callSign }}</span> -
+              <span [style.color]="x.color"
+                ><strong>{{ x.resource.status }}</strong></span
+              >
+              -
+              <span class="text-neutral-300">{{ x.distance }} m</span>
+            </h1>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button aria-label="refresh resources" class="hover:bg-neutral-700 bg-neutral-600 px-4 py-2 rounded-lg mx-2" (click)="load()">
+            Refresh
+          </button>
+        </div>
+
+        <div class="mt-4 w-full flex items-center justify-center">
+          <button class="w-[80%] bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg" (click)="submit()">
+            Commit {{ resourcesToCommit.length }} Resources
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

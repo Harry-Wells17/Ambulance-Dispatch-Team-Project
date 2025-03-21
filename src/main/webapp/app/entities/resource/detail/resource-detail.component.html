@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resource">
+      <h2 data-cy="resourceDetailsHeading"><span>Resource</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ resource.id }}</span>
+        </dd>
+        <dt><span>Created</span></dt>
+        <dd>
+          <span>{{ resource.created | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ resource.type }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ resource.status }}</span>
+        </dd>
+        <dt><span>Call Sign</span></dt>
+        <dd>
+          <span>{{ resource.callSign }}</span>
+        </dd>
+        <dt><span>Latitude</span></dt>
+        <dd>
+          <span>{{ resource.latitude }}</span>
+        </dd>
+        <dt><span>Longitude</span></dt>
+        <dd>
+          <span>{{ resource.longitude }}</span>
+        </dd>
+        <dt><span>Resource Break</span></dt>
+        <dd>
+          <div *ngIf="resource.resourceBreak">
+            <a [routerLink]="['/resource-breaks', resource.resourceBreak.id, 'view']">{{ resource.resourceBreak.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Event</span></dt>
+        <dd>
+          <div *ngIf="resource.event">
+            <a [routerLink]="['/event', resource.event.id, 'view']">{{ resource.event.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resource', resource.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

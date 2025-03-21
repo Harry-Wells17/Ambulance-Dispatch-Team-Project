@@ -1,0 +1,18 @@
+<div class="my-1">
+  <div
+    class="mx-3 w-full min-h-[50px] bg-neutral-900 p-2 rounded-md border-solid"
+    [style.background]="data.color"
+    [style.border]="data.borderColor"
+  >
+    <div class="flex flex-row items-center justify-between">
+      <h1 class="text-xl">
+        <strong>{{ dataIn.cat }}</strong>
+      </h1>
+      <p class="text-sm text-neutral-300 pr-2">Call Submitted: {{ data.howLongAgo }} ago</p>
+    </div>
+    <div>
+      <h2 class="text-white">{{ dataIn.title }}</h2>
+      <h2 class="text-neutral-300">{{ dataIn.description }}</h2>
+    </div>
+  </div>
+</div>

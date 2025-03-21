@@ -1,0 +1,181 @@
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .row {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+  .column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+  }
+
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 95%;
+    border: 1px solid #ddd;
+  }
+
+  caption {
+    text-align: center;
+    caption-side: top;
+  }
+
+  th {
+    text-align: center;
+    padding: 16px;
+  }
+
+  td {
+    text-align: center;
+    padding: 20px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #808080;
+  }
+</style>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .row {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+  .column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+  }
+
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 95%;
+    border: 1px solid #ddd;
+  }
+
+  caption {
+    text-align: center;
+    caption-side: top;
+  }
+
+  th {
+    text-align: center;
+    padding: 16px;
+  }
+
+  td {
+    text-align: center;
+    padding: 16px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #808080;
+  }
+</style>
+
+<div
+  class="border-2 px-4 flex justify-start min-h-[300px] max-h-[100vh] overflow-auto items-stretch border-neutral-700 rounded-md w-full h-full shadow-lg flex-col"
+>
+  <div class="w-full flex items-start justify-center mt-2">
+    <h1 class="text-4xl text-neutral-300">Breaks</h1>
+  </div>
+  <div class="flex items-start justify-center flex-row row flex-grow">
+    <div class="column flex items-start justify-center flex-col">
+      <table>
+        <caption class="caption text-3xl text-white">
+          On Break
+        </caption>
+        <tr>
+          <th>Resource ID</th>
+          <th>Started Break</th>
+
+          <th></th>
+        </tr>
+        <tr *ngFor="let break of breaksNotRequested" class="w-full">
+          <td>{{ callSignLookup[break.id].callSign }}</td>
+          <td>{{ howLongAgo(break.startedBreak) }}</td>
+
+          <td class="">
+            <button aria-label="end break" type="submit" class="button bg-red-600 hover:bg-red-700 w-full" (click)="moveToOffBreak(break)">
+              End Break
+            </button>
+          </td>
+        </tr>
+      </table>
+      <div *ngIf="breaksNotRequested?.length === 0" class="w-full flex items-center justify-center mt-4">
+        <h1 class="text-2xl">No Resources to display...</h1>
+      </div>
+      <div class="flex-grow"></div>
+    </div>
+    <div class="column flex items-center justify-center flex-col">
+      <table>
+        <caption class="caption text-3xl text-white">
+          Off Break
+        </caption>
+        <tr>
+          <th>Resource ID</th>
+          <th>Last Break</th>
+          <th>Requested Break</th>
+
+          <th></th>
+        </tr>
+
+        <tr *ngFor="let break of breaksRequested">
+          <td>{{ callSignLookup[break.id].callSign }}</td>
+          <td>{{ howLongAgo(break.lastBreak) }}</td>
+
+          <td>
+            <input
+              aria-label="click to request break"
+              checked
+              type="checkbox"
+              class="mr-4 ml-2"
+              style="transform: scale(2)"
+              [checked]="break.breakRequested"
+              (click)="event($event)"
+            />
+          </td>
+          <td>
+            <button
+              aria-label="start break"
+              type="submit"
+              class="button bg-green-600 hover:bg-green-700 w-full"
+              (click)="moveToOnBreak(break)"
+            >
+              Start Break
+            </button>
+          </td>
+        </tr>
+      </table>
+      <div *ngIf="breaksRequested?.length === 0" class="w-full flex items-center justify-center mt-4">
+        <h1 class="text-2xl">No Resources to display...</h1>
+      </div>
+      <div class="flex-grow"></div>
+    </div>
+  </div>
+</div>

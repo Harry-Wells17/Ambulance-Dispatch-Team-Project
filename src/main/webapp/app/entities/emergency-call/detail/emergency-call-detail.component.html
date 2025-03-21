@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="emergencyCall">
+      <h2 data-cy="emergencyCallDetailsHeading"><span>Emergency Call</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ emergencyCall.id }}</span>
+        </dd>
+        <dt><span>Created</span></dt>
+        <dd>
+          <span>{{ emergencyCall.created | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Open</span></dt>
+        <dd>
+          <span>{{ emergencyCall.open }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ emergencyCall.type }}</span>
+        </dd>
+        <dt><span>Age</span></dt>
+        <dd>
+          <span>{{ emergencyCall.age }}</span>
+        </dd>
+        <dt><span>Sex Assigned At Birth</span></dt>
+        <dd>
+          <span>{{ emergencyCall.sexAssignedAtBirth }}</span>
+        </dd>
+        <dt><span>History</span></dt>
+        <dd>
+          <span>{{ emergencyCall.history }}</span>
+        </dd>
+        <dt><span>Injuries</span></dt>
+        <dd>
+          <span>{{ emergencyCall.injuries }}</span>
+        </dd>
+        <dt><span>Condition</span></dt>
+        <dd>
+          <span>{{ emergencyCall.condition }}</span>
+        </dd>
+        <dt><span>Latitude</span></dt>
+        <dd>
+          <span>{{ emergencyCall.latitude }}</span>
+        </dd>
+        <dt><span>Longitude</span></dt>
+        <dd>
+          <span>{{ emergencyCall.longitude }}</span>
+        </dd>
+        <dt><span>Closed</span></dt>
+        <dd>
+          <span>{{ emergencyCall.closed }}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <span>{{ emergencyCall.createdBy?.login }}</span>
+        </dd>
+        <dt><span>Event</span></dt>
+        <dd>
+          <div *ngIf="emergencyCall.event">
+            <a [routerLink]="['/event', emergencyCall.event.id, 'view']">{{ emergencyCall.event.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/emergency-call', emergencyCall.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

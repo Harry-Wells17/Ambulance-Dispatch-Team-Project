@@ -1,0 +1,156 @@
+<!-- Not Logged In -->
+<div class="min-h-[80vh]">
+  <div *ngIf="account === null || account === undefined">
+    <div class="text-white w-full mb-20 min-h-[40vh]">
+      <div class="w-full flex items-center justify-center">
+        <div class="bg-red-600 w-[60%] p-3 border-2 border-red-700 rounded-lg flex flex-row items-center justify-between">
+          <h1 class="text-xl"><strong>You are not logged in</strong>, you must be logged into this protected page!</h1>
+          <h1 class="mr-2 text-3xl mt-[-5px]">x</h1>
+        </div>
+      </div>
+      <div class="mt-8 flex items-center justify-center w-full flex-col">
+        <h1>
+          Please sign in to view this page, please then navigate back to <span class="px-2 py-1 bg-neutral-700 rounded-md">/events</span> !
+        </h1>
+        <a [routerLink]="'/login'">
+          <button aria-label="open sign in page" class="button bg-slate-600 hover:bg-slate-700 w-[100px] mt-3">Sign In</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      account !== undefined &&
+      account !== null &&
+      !(
+        account.authorities.includes('ROLE_ADMIN') ||
+        account.authorities.includes('ROLE_DISPATCHER') ||
+        account.authorities.includes('ROLE_CONTROL_ROOM_MANAGER') ||
+        account.authorities.includes('ROLE_LOGGIST') ||
+        account.authorities.includes('ROLE_MANAGEMENT')
+      )
+    "
+  >
+    <div class="text-white w-full mb-20 min-h-[40vh]">
+      <div class="w-full flex items-center justify-center">
+        <div class="bg-red-600 w-[60%] p-3 border-2 border-red-700 rounded-lg flex flex-row items-center justify-between">
+          <h1 class="text-xl">
+            <strong>You are not authorised to view this page! </strong>
+            <span class="text-lg"
+              >Only <span class="px-2 py-1 bg-neutral-700 rounded-md">ADMIN</span>,
+              <span class="px-2 py-1 bg-neutral-700 rounded-md">MANAGEMENT</span>,
+              <span class="px-2 py-1 bg-neutral-700 rounded-md">CONTROL ROOM MANAGER</span>,
+              <span class="px-2 py-1 bg-neutral-700 rounded-md">LOGGIST</span>,
+              <span class="px-2 py-1 bg-neutral-700 rounded-md">DISPATCHER</span>, accounts can access this!
+            </span>
+          </h1>
+          <h1 class="mr-2 text-3xl mt-[-5px]">x</h1>
+        </div>
+      </div>
+      <div class="mt-8 flex items-center justify-center w-full flex-col">
+        <h1>
+          Please sign in with an authorised account to view this page, please then navigate back to
+          <span class="px-2 py-1 bg-neutral-700 rounded-md">/events</span> !
+        </h1>
+        <a [routerLink]="'/login'">
+          <button aria-label="open sign in page" class="button bg-slate-600 hover:bg-slate-700 w-[100px] mt-3">Sign In</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logged In -->
+  <div
+    *ngIf="
+      account !== undefined &&
+      account !== null &&
+      (account.authorities.includes('ROLE_ADMIN') ||
+        account.authorities.includes('ROLE_DISPATCHER') ||
+        account.authorities.includes('ROLE_CONTROL_ROOM_MANAGER') ||
+        account.authorities.includes('ROLE_LOGGIST') ||
+        account.authorities.includes('ROLE_MANAGEMENT'))
+    "
+  >
+    <div *ngIf="showCreateNew" class="fixed top-0 left-0 overflow-hidden text-white min-h-[80vh]">
+      <div class="w-[100vw] h-[100vh] bg-opacity-50 bg-neutral-950 top-0 left-0 flex items-center justify-center">
+        <div class="bg-neutral-800 min-w-[30vw] min-h-[100px] rounded-lg border-2 border-neutral-700 shadow-lg shadow-white p-3">
+          <div class="w-full flex items-center justify-between">
+            <h1 class="text-xl">Create New Event</h1>
+            <button aria-label="cancel create new event" class="button bg-red-600 hover:bg-red-700" (click)="hideCreateNewEvent()">
+              Cancel
+            </button>
+          </div>
+          <form name="editForm" role="form" novalidate (ngSubmit)="create()" [formGroup]="editForm">
+            <div class="mt-2">
+              <h1>Event Name:</h1>
+              <input
+                aria-label="enter name of event"
+                type="text"
+                name="eventName"
+                id="field_eventName"
+                data-cy="eventName"
+                formControlName="eventName"
+                class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+                placeholder="Enter the event name..."
+              />
+              <h1 class="mt-4">Event Description</h1>
+              <textarea
+                name="eventDescription"
+                id="field_eventDescription"
+                data-cy="eventDescription"
+                formControlName="eventDescription"
+                class="w-full p-2 text-white bg-neutral-800 border-[1px] rounded-md border-neutral-700 shadow-lg mt-1"
+                placeholder="Enter the event description..."
+              ></textarea>
+            </div>
+            <div class="mt-10 flex w-full">
+              <button aria-label="create event" type="submit" class="button bg-green-600 hover:bg-green-700 w-full">Create Event</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showSuccess"
+      class="fixed bottom-0 right-0 z-100 min-w-[300px] bg-neutral-800 m-10 text-white flex flex-row items-center justify-between rounded-md overflow-hidden"
+    >
+      <div class="h-[80px] w-[4px] bg-green-500 mr-2"></div>
+      <div class="py-2 pr-4 flex-grow ml-2">
+        <h1 class="text-3xl">Success</h1>
+        <p class="text-sm text-neutral-400">The Event was successfully created!</p>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showError"
+      class="fixed bottom-0 right-0 z-100 min-w-[300px] bg-neutral-800 m-10 text-white flex flex-row items-center justify-between rounded-md overflow-hidden"
+    >
+      <div class="h-[80px] w-[4px] bg-red-500 mr-2"></div>
+      <div class="py-2 pr-4 flex-grow ml-2">
+        <h1 class="text-3xl">Failed</h1>
+        <p class="text-sm text-neutral-400">The Event was unable to be created, please try again!</p>
+      </div>
+    </div>
+
+    <div class="text-white w-full mb-20" [style.pointerEvents]="!showCreateNew">
+      <div class="w-full flex items-center justify-between mb-4 px-4">
+        <h1 class="text-3xl">Select a Shift to view it:</h1>
+        <button aria-label="create event" class="button bg-green-600 hover:bg-green-700" (click)="showCreateNewEvent()">
+          Create New Event
+        </button>
+      </div>
+
+      <div class="alert alert-warning" id="no-result" *ngIf="events?.length === 0">
+        <span>No Events found</span>
+      </div>
+
+      <div class="flex items-center justify-center flex-row flex-wrap w-[100vw]">
+        <div *ngFor="let input of events">
+          <event-card [dataIn]="input"></event-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

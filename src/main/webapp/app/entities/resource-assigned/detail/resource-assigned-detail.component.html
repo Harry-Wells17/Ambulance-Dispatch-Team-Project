@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resourceAssigned">
+      <h2 data-cy="resourceAssignedDetailsHeading"><span>Resource Assigned</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.id }}</span>
+        </dd>
+        <dt><span>Call Recieved Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.callRecievedTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>On Scene Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.onSceneTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Left Scene Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.leftSceneTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Arrived Hospital Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.arrivedHospitalTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Clear Hospital Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.clearHospitalTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Green Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.greenTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Un Assigned Time</span></dt>
+        <dd>
+          <span>{{ resourceAssigned.unAssignedTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Resource</span></dt>
+        <dd>
+          <div *ngIf="resourceAssigned.resource">
+            <a [routerLink]="['/resource', resourceAssigned.resource.id, 'view']">{{ resourceAssigned.resource.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Emergency Call</span></dt>
+        <dd>
+          <div *ngIf="resourceAssigned.emergencyCall">
+            <a [routerLink]="['/emergency-call', resourceAssigned.emergencyCall.id, 'view']">{{ resourceAssigned.emergencyCall.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resource-assigned', resourceAssigned.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<div>
+  <h2 id="page-heading" data-cy="ResourceAssignedHeading">
+    <span>Resource Assigneds</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-resource-assigned"
+        [routerLink]="['/resource-assigned/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Resource Assigned </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="resourceAssigneds?.length === 0">
+    <span>No Resource Assigneds found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="resourceAssigneds && resourceAssigneds.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="callRecievedTime">
+            <div class="d-flex">
+              <span>Call Recieved Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="onSceneTime">
+            <div class="d-flex">
+              <span>On Scene Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="leftSceneTime">
+            <div class="d-flex">
+              <span>Left Scene Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="arrivedHospitalTime">
+            <div class="d-flex">
+              <span>Arrived Hospital Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="clearHospitalTime">
+            <div class="d-flex">
+              <span>Clear Hospital Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="greenTime">
+            <div class="d-flex">
+              <span>Green Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="unAssignedTime">
+            <div class="d-flex">
+              <span>Un Assigned Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="resource.id">
+            <div class="d-flex">
+              <span>Resource</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="emergencyCall.id">
+            <div class="d-flex">
+              <span>Emergency Call</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resourceAssigned of resourceAssigneds; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/resource-assigned', resourceAssigned.id, 'view']">{{ resourceAssigned.id }}</a>
+          </td>
+          <td>{{ resourceAssigned.callRecievedTime | formatMediumDatetime }}</td>
+          <td>{{ resourceAssigned.onSceneTime | formatMediumDatetime }}</td>
+          <td>{{ resourceAssigned.leftSceneTime | formatMediumDatetime }}</td>
+          <td>{{ resourceAssigned.arrivedHospitalTime | formatMediumDatetime }}</td>
+          <td>{{ resourceAssigned.clearHospitalTime | formatMediumDatetime }}</td>
+          <td>{{ resourceAssigned.greenTime | formatMediumDatetime }}</td>
+          <td>{{ resourceAssigned.unAssignedTime | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="resourceAssigned.resource">
+              <a [routerLink]="['/resource', resourceAssigned.resource.id, 'view']">{{ resourceAssigned.resource.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="resourceAssigned.emergencyCall">
+              <a [routerLink]="['/emergency-call', resourceAssigned.emergencyCall.id, 'view']">{{ resourceAssigned.emergencyCall.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/resource-assigned', resourceAssigned.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/resource-assigned', resourceAssigned.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(resourceAssigned)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

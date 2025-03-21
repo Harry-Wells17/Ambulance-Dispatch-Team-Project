@@ -1,0 +1,56 @@
+<div class="flex items-center justify-center flex-col w-full h-full mb-2">
+  <h1 class="w-full text-center mt-2 text-xl">
+    <strong>{{ event?.eventName }}</strong>
+  </h1>
+
+  <div style="width: 95%" class="flex-grow mt-2">
+    <div class="flex flex-row items-center justify-between">
+      <div class="flex-grow">
+        <h1><span class="text-neutral-300">Call Sign:</span> {{ internalResource?.callSign }}</h1>
+        <h1><span class="text-neutral-300">Resource:</span> {{ internalResource?.type }}</h1>
+        <h1>
+          <span class="text-neutral-300">Status:</span>
+          <span [style.color]="color"
+            ><strong>{{ internalResource?.status }}</strong></span
+          >
+        </h1>
+      </div>
+      <div class="mr-2">
+        <button class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded-lg" (click)="endShiftBound()">End Shift</button>
+      </div>
+    </div>
+
+    <div
+      style="border: 2px solid rgb(82 82 82); outline: none; height: 250px"
+      class="mt-4 items-center w-full flex-1 rounded-lg flex flex-col py-2 overflow-auto"
+    >
+      <h1>Assigned Live Calls</h1>
+      <div class="flex-grow w-full h-max mt-2">
+        <call-card-mobile *ngFor="let item of resourceAssignedListActive" [resourceAssigned]="item"></call-card-mobile>
+      </div>
+    </div>
+
+    <div
+      style="border: 2px solid rgb(82 82 82); outline: none; min-height: 250px"
+      class="mt-4 items-center justify-center w-full flex-1 rounded-lg flex flex-col"
+    >
+      <div class="h-full w-full flex-grow">
+        <div id="map-container" class="relative h-full w-full overflow-hidden rounded-md" style="height: 250px">
+          <div id="map-element" style="z-index: 1000" class="absolute w-full h-full top-0 left-0"></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="border: 2px solid rgb(82 82 82); outline: none; height: 250px"
+      class="mt-4 items-center w-full flex-1 rounded-lg flex flex-col py-2 overflow-auto"
+    >
+      <h1>Assigned Finished Calls</h1>
+      <div class="flex-grow w-full h-max mt-2">
+        <call-card-mobile *ngFor="let item of resourceAssignedListClosed" [resourceAssigned]="item"></call-card-mobile>
+      </div>
+    </div>
+
+    <button class="w-full bg-green-600 hover:bg-green-700 rounded-lg mt-2" (click)="requestBreak()">Request Break</button>
+  </div>
+</div>
